@@ -1,0 +1,21 @@
+@Sep2026.Project1.WebApi_HostAddress = http://localhost:5232
+
+GET {{Sep2026.Project1.WebApi_HostAddress}}/api/question
+Accept: application/json
+
+###
+
+GET {{Sep2026.Project1.WebApi_HostAddress}}/api/question/7
+Accept: application/json
+
+###
+
+GET {{Sep2026.Project1.WebApi_HostAddress}}/api/number
+Accept: application/json
+
+###
+
+GET {{Sep2026.Project1.WebApi_HostAddress}}/api/question/1/answer/5
+Accept: application/json
+
+###
