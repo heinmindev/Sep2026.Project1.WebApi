@@ -15,6 +15,31 @@ Accept: application/json
 
 ###
 
+POST {{Sep2026.Project1.WebApi_HostAddress}}/api/question
+Content-Type: application/json
+
+{
+  "questionName": "New question"
+}
+
+###
+
+GET {{Sep2026.Project1.WebApi_HostAddress}}/api/answer?questionId=1
+Accept: application/json
+
+###
+
+POST {{Sep2026.Project1.WebApi_HostAddress}}/api/answer
+Content-Type: application/json
+
+{
+  "questionId": 65,
+  "answerNo": 1,
+  "answerResult": "New answer"
+}
+
+###
+
 GET {{Sep2026.Project1.WebApi_HostAddress}}/api/question/1/answer/5
 Accept: application/json
 

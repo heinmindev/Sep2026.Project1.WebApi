@@ -34,6 +34,57 @@ namespace Sep2026.Project1.WebApi.Controllers
             return Ok(item);
         }
 
+        [HttpPost]
+        public IActionResult CreateQuestion(QuestionRequestModel requestModel)
+        {
+            int newId = (_db.Project1Questions.Max(x => (int?)x.QuestionId) ?? 0) + 1;
+            var item = new Project1Question
+            {
+                QuestionId = newId,
+                QuestionNo = newId,
+                QuestionName = requestModel.QuestionName.Trim(),
+            };
+            _db.Project1Questions.Add(item);
+            _db.SaveChanges();
+
+            return Ok(item);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpsertQuestion(int id, QuestionRequestModel requestModel)
+        {
+            var item = _db.Project1Questions.FirstOrDefault(x => x.QuestionId == id);
+            if (item is null)
+            {
+                return NotFound();
+            }
+
+            item.QuestionName = requestModel.QuestionName.Trim();
+            _db.SaveChanges();
+
+            return Ok("Updating Successful.");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteQuestion(int id)
+        {
+            var item = _db.Project1Questions.FirstOrDefault(x => x.QuestionId == id);
+            if (item is null)
+            {
+                return NotFound();
+            }
+
+            if (_db.Project1Answers.Any(x => x.QuestionId == id))
+            {
+                return Conflict("Delete this question's answers first.");
+            }
+
+            _db.Project1Questions.Remove(item);
+            _db.SaveChanges();
+
+            return Ok("Deleting Successful.");
+        }
+
         // Some questions have two rows for one AnswerNo in the source data, so every match is returned.
         [HttpGet("{id}/answer/{answerNo}")]
         public IActionResult GetAnswer(int id, int answerNo)
